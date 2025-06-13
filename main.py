@@ -13,14 +13,14 @@ def get_stats():
     # Memory stats
     memory = psutil.virtual_memory()
     memory_percent = memory.percent
-    memory_used = memory.used / (1024 * 1024 * 1024)  # Convert to GB
-    memory_total = memory.total / (1024 * 1024 * 1024)  # Convert to GB
+    memory_used = memory.used / (1024 ** 3)  # Convert to GB
+    memory_total = memory.total / (1024 ** 3)  # Convert to GB
     
     # Disk stats
     disk = psutil.disk_usage('/')
     disk_percent = disk.percent
-    disk_used = disk.used / (1024 * 1024 * 1024)  # Convert to GB
-    disk_total = disk.total / (1024 * 1024 * 1024)  # Convert to GB
+    disk_used = disk.used / (1024 ** 3)  # Convert to GB
+    disk_total = disk.total / (1024 ** 3)  # Convert to GB
     
     stats = {
         'cpu': {
@@ -41,9 +41,6 @@ def get_stats():
     }
     
     return jsonify(stats)
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
 
 @app.route('/')
 def index():
@@ -94,8 +91,7 @@ def index():
                         document.getElementById('stats').innerHTML = statsHtml;
                     });
             }
-            
-            // Update stats immediately and then every 5 seconds
+
             updateStats();
             setInterval(updateStats, 5000);
         </script>
@@ -103,7 +99,5 @@ def index():
     </html>
     '''
 
-
-
-
-
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
